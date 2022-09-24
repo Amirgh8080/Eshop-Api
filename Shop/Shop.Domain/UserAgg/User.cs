@@ -86,6 +86,7 @@ namespace Shop.Domain.UserAgg
 
         public void SetRoles(List<UserRole> roles)
         {
+            roles.ForEach(r => r.UserId = Id);
             Roles.Clear();
             Roles.AddRange(roles);
         }

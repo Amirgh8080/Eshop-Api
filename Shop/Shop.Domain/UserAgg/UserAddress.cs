@@ -5,8 +5,11 @@ namespace Shop.Domain.UserAgg
 {
     public class UserAddress : BaseEntity
     {
-        public UserAddress(string shire, string city, string postalCode, string postaAdderss, string phoneNumber, string name, string family, string nationalCode)
+        public UserAddress(string shire, string city, string postalCode, string postaAdderss,
+            string phoneNumber, string name, string family, string nationalCode)
         {
+            Guard(shire, city, postalCode, postaAdderss, phoneNumber,
+           name, family, nationalCode);
             Shire = shire;
             City = city;
             PostalCode = postalCode;
@@ -15,6 +18,7 @@ namespace Shop.Domain.UserAgg
             Name = name;
             Family = family;
             NationalCode = nationalCode;
+            ActiveAddress = false;
         }
 
         public long UserId { get; internal set; }
@@ -26,10 +30,13 @@ namespace Shop.Domain.UserAgg
         public string Name { get; private set; }
         public string Family { get; private set; }
         public string NationalCode { get; private set; }
+        public bool ActiveAddress { get; private set; }
 
-
-        public void Edit(string shire, string city, string postalCode, string postaAdderss, string phoneNumber, string name, string family, string nationalCode)
+        public void Edit(string shire, string city, string postalCode, string postaAdderss, string phoneNumber,
+            string name, string family, string nationalCode)
         {
+            Guard(shire, city, postalCode, postaAdderss, phoneNumber,
+             name, family, nationalCode);
             Shire = shire;
             City = city;
             PostalCode = postalCode;
@@ -40,7 +47,13 @@ namespace Shop.Domain.UserAgg
             NationalCode = nationalCode;
         }
 
-        public void Guard(string shire, string city, string postalCode, string postaAdderss, string phoneNumber, string name, string family, string nationalCode)
+        public void SetActive()
+        {
+            ActiveAddress = true;
+        }
+
+        public void Guard(string shire, string city, string postalCode, string postaAdderss, string phoneNumber,
+            string name, string family, string nationalCode)
         {
             NullOrEmptyDomainDataException.CheckString(shire, nameof(shire));
             NullOrEmptyDomainDataException.CheckString(city, nameof(city));
@@ -50,6 +63,10 @@ namespace Shop.Domain.UserAgg
             NullOrEmptyDomainDataException.CheckString(name, nameof(name));
             NullOrEmptyDomainDataException.CheckString(family, nameof(family));
             NullOrEmptyDomainDataException.CheckString(nationalCode, nameof(nationalCode));
+
+            if (!IranianNationalIdChecker.IsValid(nationalCode))
+                throw new InvalidDomainDataException("کد ملی معتبر نیست");
+
         }
     }
 }
