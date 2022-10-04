@@ -90,7 +90,7 @@ namespace Shop.Domain.ProductAgg
 
 
             if (slug != Slug)
-                if (service.SlugIsExist(slug.ToSlug())
+                if (service.SlugIsExist(slug.ToSlug()))
                     throw new SlugIsDuplicateException();
 
             

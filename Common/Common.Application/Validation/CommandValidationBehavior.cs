@@ -41,5 +41,10 @@ namespace Common.Application.Validation
             var response = await next();
             return response;
         }
+
+        public Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
