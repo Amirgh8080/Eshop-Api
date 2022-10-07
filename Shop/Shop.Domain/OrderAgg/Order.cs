@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -52,16 +53,26 @@ namespace Shop.Domain.OrderAgg
 
         public void AddItem(OrderItem item)
         {
+            ChangeOrderGuard();
+            var oldItem = Items.FirstOrDefault(i => i.InverntoryId == item.InverntoryId);
+            if (oldItem!=null)
+            {
+                oldItem.ChangeCount(item.Count+oldItem.Count);
+                return;
+            }
             Items.Add(item);
         }
         public void RemoveItem(long itemId)
         {
+            ChangeOrderGuard();
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if(currentItem != null)
                 Items.Remove(currentItem);
         }
-        public void CHangeCount(long itemId,int newCount)
+        public void CHangeCountItem(long itemId,int newCount)
         {
+            ChangeOrderGuard();
+
             var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
             if (currentItem == null)
                 throw new NullOrEmptyDomainDataException();
@@ -77,7 +88,16 @@ namespace Shop.Domain.OrderAgg
 
         public void CheckOut(OrderAddress address)
         {
+            ChangeOrderGuard();
+
             Address = address;
+        }
+
+        public void ChangeOrderGuard()
+        {
+            if (Status != OrderStatus.Pennding)
+                throw new InvalidDomainDataException("امکان ثبت محصول در این سفارش وجود ندارد");
+
         }
     }
 }

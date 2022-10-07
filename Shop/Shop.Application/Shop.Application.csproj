@@ -12,7 +12,6 @@
     <Folder Include="Comments\ChangeStatus\" />
     <Folder Include="Orders\ChangeCount\" />
     <Folder Include="Orders\ReamoveItem\" />
-    <Folder Include="Orders\AddItem\" />
     <Folder Include="Products\Create\" />
     <Folder Include="Products\Edit\" />
     <Folder Include="Products\AddImage\" />
