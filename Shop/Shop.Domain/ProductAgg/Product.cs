@@ -13,14 +13,12 @@ namespace Shop.Domain.ProductAgg
 {
     public class Product:AggregateRoot
     {
-       
-
         public string Title { get; private set; }
         public string Description { get; private set; }
         public string ImageName { get; private set; }
         public long CategoryId { get; private set; }
         public long SubCategoryId { get; set; }
-        public long SeconderySubCategory { get; private set; }
+        public long? SeconderySubCategory { get; private set; }
         public SeoData SeoData { get; private set; }
         public string Slug { get; private set; }
         public List<ProductImage> Images { get; private set; }
@@ -31,10 +29,11 @@ namespace Shop.Domain.ProductAgg
 
         }
 
-        public Product(string title, string description, int categoryId, int subCategoryId,
-           int seconderySubCategory, string slug, SeoData seoData, string imageName, IProductDomainService service)
+        public Product(string title, string description, long categoryId, long subCategoryId,
+           long seconderySubCategory, string slug, SeoData seoData, string imageName, IProductDomainService service)
         {
-            Guard(title, slug, description, imageName, service);
+            Guard(title, slug, description, service);
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
 
             Title = title;
             Description = description;
@@ -46,11 +45,11 @@ namespace Shop.Domain.ProductAgg
             ImageName = imageName;
         }
 
-        public void Edit(string title, string description, int categoryId, int subCategoryId,
-         int seconderySubCategory, string slug, SeoData seoData, string imageName,
+        public void Edit(string title, string description, long categoryId, long subCategoryId,
+         long seconderySubCategory, string slug, SeoData seoData,
          IProductDomainService service)
         {
-            Guard(title,slug,description,imageName, service);
+            Guard(title,slug,description, service);
 
             Title = title;
             Description = description;
@@ -59,6 +58,11 @@ namespace Shop.Domain.ProductAgg
             SeconderySubCategory = seconderySubCategory;
             Slug = slug.ToSlug();
             SeoData = seoData;
+        }
+
+        public void SetProductImage(string imageName)
+        {
+            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             ImageName = imageName;
         }
 
@@ -80,12 +84,11 @@ namespace Shop.Domain.ProductAgg
             Specifications = specifications;
         }
 
-        public void Guard(string title,string slug, string description, string imageName,
+        public void Guard(string title,string slug, string description,
             IProductDomainService service)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
             NullOrEmptyDomainDataException.CheckString(description, nameof(description));
-            NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
             NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
 
 

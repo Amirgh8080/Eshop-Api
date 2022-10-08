@@ -69,6 +69,29 @@ namespace Shop.Domain.OrderAgg
             if(currentItem != null)
                 Items.Remove(currentItem);
         }
+
+        public void IncreaceCount(long itemId,int count)
+        {
+            ChangeOrderGuard();
+            var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
+            if (currentItem == null)
+                throw new NullOrEmptyDomainDataException();
+
+            currentItem.IncreaceCount(count);
+
+        }
+
+        public void DecreaceCount(long itemId, int count)
+        {
+            ChangeOrderGuard();
+            var currentItem = Items.FirstOrDefault(i => i.Id == itemId);
+            if (currentItem == null)
+                throw new NullOrEmptyDomainDataException();
+
+            currentItem.DecreaceCount(count);
+
+        }
+
         public void CHangeCountItem(long itemId,int newCount)
         {
             ChangeOrderGuard();
@@ -96,7 +119,7 @@ namespace Shop.Domain.OrderAgg
         public void ChangeOrderGuard()
         {
             if (Status != OrderStatus.Pennding)
-                throw new InvalidDomainDataException("امکان ثبت محصول در این سفارش وجود ندارد");
+                throw new InvalidDomainDataException("امکان ویرایش این سفارش وجود ندارد");
 
         }
     }
