@@ -2,20 +2,17 @@
 using Common.Application.Validation.FluentValidations;
 using FluentValidation;
 
-namespace Shop.Application.Sellers.Edit
-{
-    public class EditSellerCommandValidator : AbstractValidator<EditSellerCommand>
-    {
-        public EditSellerCommandValidator()
-        {
-            RuleFor(r => r.ShopName)
-                .NotEmpty()
-                .WithMessage(ValidationMessages.required("نام فروشگاه"));
+namespace Shop.Application.Sellers.Edit;
 
-            RuleFor(r => r.NationalCode)
-                .NotEmpty()
-                .WithMessage(ValidationMessages.required("کد ملی"))
-                .ValidNationalId();
-        }
+public class EditSellerCommandValidator:AbstractValidator<EditSellerCommand>
+{
+    public EditSellerCommandValidator()
+    {
+        RuleFor(r => r.ShopName)
+            .NotEmpty().WithMessage(ValidationMessages.required("نام فروشگاه"));
+
+        RuleFor(r => r.ShopName)
+            .NotEmpty().WithMessage(ValidationMessages.required("کدملی"))
+            .ValidNationalId();
     }
 }

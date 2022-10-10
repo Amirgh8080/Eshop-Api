@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.UserAgg.Repository
 {
-    public interface IUser: IBaseRepository<User>
+    public interface IUserRepository: IBaseRepository<User>
     {
     }
 }

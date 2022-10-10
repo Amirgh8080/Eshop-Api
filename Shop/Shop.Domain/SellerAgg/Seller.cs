@@ -1,5 +1,6 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
+using MediatR;
 using Shop.Domain.SellerAgg.Services;
 using System;
 using System.Collections.Generic;
@@ -45,7 +46,7 @@ namespace Shop.Domain.SellerAgg
             LastUpdate = DateTime.Now;
         }
 
-        public void Edit(string shopName, string nationalCode,ISellerDomainService domainService)
+        public void Edit(string shopName, string nationalCode,SellerStatus status, ISellerDomainService domainService)
         {
             if(nationalCode != NationalCode)
                 if(domainService.DoesNationalCodeExistInDataBase(nationalCode))
@@ -54,6 +55,7 @@ namespace Shop.Domain.SellerAgg
             Guard(shopName, nationalCode);
             ShopName = shopName;
             NationalCode = nationalCode;
+            Status = status;
         }
 
         public void AddInventory(SellerInventory inventory)
@@ -64,14 +66,14 @@ namespace Shop.Domain.SellerAgg
             Inventories.Add(inventory);
         }
 
-        public void EditInventory(SellerInventory inventory)
+        public void EditInventory(long inventoryId, int count, int price, int? discountPercentage)
         {
-            var currentInventory = Inventories.FirstOrDefault(i => i.Id == inventory.Id);
+            var currentInventory = Inventories.FirstOrDefault(f => f.Id == inventoryId);
             if (currentInventory == null)
-                return;
+                throw new NullOrEmptyDomainDataException("محصول یافت نشد");
 
-            Inventories.Remove(currentInventory);
-            Inventories.Add(inventory);
+            //TODO Check Inventories
+            currentInventory.Edit(count, price, discountPercentage);
         }
 
         public void DeleteInventory(long inventoryId)
