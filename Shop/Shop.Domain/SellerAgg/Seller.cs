@@ -1,5 +1,6 @@
 ﻿using Common.Domain;
 using Common.Domain.Exceptions;
+using Shop.Domain.SellerAgg.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +20,18 @@ namespace Shop.Domain.SellerAgg
         public DateTime? LastUpdate { get; private set; }
         public List<SellerInventory> Inventories { get; private set; }
 
-        public Seller(long userId, string shopName, string nationalCode)
+        public Seller(long userId, string shopName, string nationalCode,ISellerDomainService domainSevice)
         {
             Guard(shopName, nationalCode);
-
+            
             UserId = userId;
             ShopName = shopName;
             NationalCode = nationalCode;
             Inventories = new List<SellerInventory>();
+
+            if (domainSevice.IsSellerInformationValid(this) == false)
+                throw new InvalidDomainDataException("اطلاعات نا معتبر است.");
+
         }
 
         private Seller()
@@ -40,8 +45,12 @@ namespace Shop.Domain.SellerAgg
             LastUpdate = DateTime.Now;
         }
 
-        public void Edit(string shopName, string nationalCode)
+        public void Edit(string shopName, string nationalCode,ISellerDomainService domainService)
         {
+            if(nationalCode != NationalCode)
+                if(domainService.DoesNationalCodeExistInDataBase(nationalCode))
+                    throw new InvalidDomainDataException("کد ملی متعلق به شخص دیگری است.");
+                
             Guard(shopName, nationalCode);
             ShopName = shopName;
             NationalCode = nationalCode;

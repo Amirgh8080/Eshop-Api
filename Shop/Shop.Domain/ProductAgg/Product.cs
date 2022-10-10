@@ -71,12 +71,14 @@ namespace Shop.Domain.ProductAgg
             image.ProductId = Id;
             Images.Add(image);
         }
-        public void RemoveImage(long imageId)
+        public string RemoveImage(long imageId)
         {
             var image = Images.FirstOrDefault(i => i.Id == imageId);
             if (image == null)
-                return;
+                throw new NullOrEmptyDomainDataException("عکس یافت نشد.");
+
             Images.Remove(image);
+            return image.ImageName;
         }
         public void SetSpecification(List<ProductSpecification> specifications)
         {
@@ -84,7 +86,7 @@ namespace Shop.Domain.ProductAgg
             Specifications = specifications;
         }
 
-        public void Guard(string title,string slug, string description,
+        private void Guard(string title,string slug, string description,
             IProductDomainService service)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
