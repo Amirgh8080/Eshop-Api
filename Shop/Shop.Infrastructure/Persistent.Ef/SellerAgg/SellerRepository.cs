@@ -8,7 +8,7 @@ using Shop.Infrastructure.Persistent.EF;
 
 namespace Shop.Infrastructure.Persistent.Ef.SellerAgg;
 
-internal class SellerRepository : BaseRepository<Seller>, ISellerRepository
+public class SellerRepository : BaseRepository<Seller>, ISellerRepository
 {
     private readonly DapperContext _dapperContext;
     public SellerRepository(ShopContext context, DapperContext dapperContext) : base(context)

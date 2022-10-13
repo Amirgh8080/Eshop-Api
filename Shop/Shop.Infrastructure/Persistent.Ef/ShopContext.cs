@@ -2,6 +2,7 @@
 using Shop.Domain.CategoryAgg;
 using Shop.Domain.CommentAgg;
 using Shop.Domain.OrderAgg;
+using Shop.Domain.OrderAgg.ValueObjects;
 using Shop.Domain.ProductAgg;
 using Shop.Domain.RoleAgg;
 using Shop.Domain.SellerAgg;
@@ -26,7 +27,7 @@ public class ShopContext:DbContext
     public DbSet<Slider> Sliders { get; set; }
     public DbSet<Banner> Banners { get; set; }
     public DbSet<User> Users { get; set; }
-
+    public DbSet<ShippingMethod> ShippingMethods { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

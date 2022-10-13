@@ -21,7 +21,7 @@ namespace Shop.Infrastructure.Persistent.Ef.CategoryAgg
                 .IsRequired();
 
             builder
-                .HasMany(b => b.Childs)
+                .HasMany(b => b.Children)
                 .WithOne()
                 .HasForeignKey(b => b.ParentId);
 

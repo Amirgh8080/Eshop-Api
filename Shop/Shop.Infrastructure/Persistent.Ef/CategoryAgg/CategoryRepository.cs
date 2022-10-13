@@ -15,8 +15,8 @@ internal class CategoryRepository : BaseRepository<Category>, ICategoryRepositor
     public async Task<bool> DeleteCategory(long categoryId)
     {
         var category =await Context.Categories
-            .Include(c=>c.Childs)
-            .ThenInclude(c=>c.Childs).FirstOrDefaultAsync(f => f.Id == categoryId);
+            .Include(c=>c.Children)
+            .ThenInclude(c=>c.Children).FirstOrDefaultAsync(f => f.Id == categoryId);
         if (category == null)
             return false;
 
@@ -29,11 +29,11 @@ internal class CategoryRepository : BaseRepository<Category>, ICategoryRepositor
         if (isExistProduct)
             return false;
 
-        if (category.Childs.Any(c => c.Childs.Any()))
+        if (category.Children.Any(c => c.Children.Any()))
         {
-            Context.RemoveRange(category.Childs.SelectMany(s=>s.Childs));
+            Context.RemoveRange(category.Children.SelectMany(s=>s.Children));
         }
-        Context.RemoveRange(category.Childs);
+        Context.RemoveRange(category.Children);
         Context.RemoveRange(category);
         return true;
     }
