@@ -1,6 +1,15 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shop.Persentation.Facade.Categories;
 using Shop.Persentation.Facade.Comments;
+using Shop.Persentation.Facade.Orders;
+using Shop.Presentation.Facade.Products;
+using Shop.Presentation.Facade.Roles;
+using Shop.Presentation.Facade.Sellers;
+using Shop.Presentation.Facade.Sellers.Inventories;
+using Shop.Presentation.Facade.SiteEntities.Banner;
+using Shop.Presentation.Facade.SiteEntities.Slider;
+using Shop.Presentation.Facade.Users;
+using Shop.Presentation.Facade.Users.Addresses;
 
 namespace Shop.Persentation.Facade;
 
@@ -10,13 +19,15 @@ public static class FacadeBootstrapper
     {
         services.AddScoped<ICategoryFacade, CategoryFacade>();
         services.AddScoped<ICommentFacade, CommentFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
-        services.AddScoped<ICategoryFacade, CategoryFacade>();
+        services.AddScoped<IOrderFacade, OrderFacade>();
+        services.AddScoped<IProductFacade, ProductFacade>();
+        services.AddScoped<IRoleFacade, RoleFacade>();
+        services.AddScoped<ISellerFacade, SellerFacade>();
+        services.AddScoped<ISellerInventoryFacade, SellerInventoryFacade>();
+        services.AddScoped<IBannerFacade, BannerFacade>();
+        services.AddScoped<ISliderFacade, SliderFacade>();
+        services.AddScoped<IUserFacade, UserFacade>();
+        services.AddScoped<IUserAddressFacade, UserAddressFacade>();
 
     }
 }
