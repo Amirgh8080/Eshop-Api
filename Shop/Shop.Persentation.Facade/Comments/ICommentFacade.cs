@@ -1,0 +1,20 @@
+﻿using Common.Application;
+using Shop.Application.Comments.ChangeStatus;
+using Shop.Application.Comments.Create;
+using Shop.Application.Comments.Edit;
+using Shop.Query.Comments.DTOs;
+
+namespace Shop.Persentation.Facade.Comments;
+
+public interface ICommentFacade
+{
+    Task<OperationResult> ChangeStatus(ChangeCommentStatusCommand command);
+    Task<OperationResult> Create(CreateCommentCommand command);
+    Task<OperationResult> Edit(EditCommentCommand command);
+
+
+
+    Task<CommentDto?> GetCommentById(long id);
+    Task<CommentFilterResult> GetCommentsByFilter(CommentFilterParams filterParams);
+
+}

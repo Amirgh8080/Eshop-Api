@@ -17,6 +17,7 @@ using Shop.Domain.UserAgg.Services;
 using Shop.Infrastructure;
 using Shop.Infrastructure.Persistent.Ef.CommentAgg;
 using Shop.Infrastructure.Persistent.Ef.SellerAgg;
+using Shop.Persentation.Facade;
 using Shop.Query.Category.GetById;
 
 namespace Shop.Config
@@ -41,6 +42,9 @@ namespace Shop.Config
 
 
             services.AddValidatorsFromAssembly(typeof(AddProductImageCommandValidator).Assembly);
+
+
+            services.InitFacadeDependency();
         }
     }
 }
