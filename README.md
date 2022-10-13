@@ -1,1 +1,1 @@
-# Eshop-Api
+Shop Api Example For Training
