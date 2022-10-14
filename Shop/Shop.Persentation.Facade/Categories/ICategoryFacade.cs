@@ -1,6 +1,7 @@
 ﻿using Common.Application;
 using Shop.Application.Categories.Add_Child;
 using Shop.Application.Categories.Create;
+using Shop.Application.Categories.Delete;
 using Shop.Application.Categories.Edit;
 using Shop.Query.Category.DTOs;
 
@@ -11,6 +12,7 @@ public interface ICategoryFacade
     Task<OperationResult> AddChild(AddChildCategoryCommand command);
     Task<OperationResult> Create(CreateCategoryCommand command);
     Task<OperationResult> Edit(EditCategoryCommand command);
+    Task<OperationResult> Delete(long categoryId);
 
 
 

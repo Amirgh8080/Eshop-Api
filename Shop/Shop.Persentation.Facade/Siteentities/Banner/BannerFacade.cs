@@ -7,7 +7,7 @@ using Shop.Query.SiteEntities.Banners.GetById;
 using Shop.Query.SiteEntities.Banners.GetList;
 using Shop.Query.SiteEntities.DTOs;
 
-namespace Shop.Presentation.Facade.SiteEntities.Banner;
+namespace Shop.Persentation.Facade.Siteentities.Banner;
 
 internal class BannerFacade : IBannerFacade
 {

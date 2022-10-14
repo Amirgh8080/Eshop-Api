@@ -3,7 +3,7 @@ using Shop.Application.Roles.Create;
 using Shop.Application.Roles.Edit;
 using Shop.Query.Roles.DTOs;
 
-namespace Shop.Presentation.Facade.Roles;
+namespace Shop.Persentation.Facade.Roles;
 
 public interface IRoleFacade
 {

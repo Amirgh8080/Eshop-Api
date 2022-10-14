@@ -13,7 +13,7 @@ using Shop.Query.Users.UserTokens;
 using Shop.Query.Users.UserTokens.GetByJwtToken;
 using Shop.Query.Users.UserTokens.GetByRefreshToken;
 
-namespace Shop.Presentation.Facade.Users;
+namespace Shop.Persentation.Facade.Users;
 
 internal class UserFacade : IUserFacade
 {
@@ -29,7 +29,7 @@ internal class UserFacade : IUserFacade
         return await _mediator.Send(command);
     }
 
-  
+
     public async Task<OperationResult> EditUser(EditUserCommand command)
     {
         return await _mediator.Send(command);
@@ -39,7 +39,7 @@ internal class UserFacade : IUserFacade
     {
         return await _mediator.Send(new GetUserByIdQuery(userId));
     }
-    
+
     public async Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams)
     {
         return await _mediator.Send(new GetUserByFilterQuery(filterParams));

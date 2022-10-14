@@ -3,7 +3,7 @@ using Shop.Application.SiteEntities.Banners.Create;
 using Shop.Application.SiteEntities.Banners.Edit;
 using Shop.Query.SiteEntities.DTOs;
 
-namespace Shop.Presentation.Facade.SiteEntities.Banner;
+namespace Shop.Persentation.Facade.Siteentities.Banner;
 
 public interface IBannerFacade
 {

@@ -7,7 +7,7 @@ using Shop.Query.Users.Addresses.GetById;
 using Shop.Query.Users.Addresses.GetList;
 using Shop.Query.Users.DTOs;
 
-namespace Shop.Presentation.Facade.Users.Addresses
+namespace Shop.Persentation.Facade.Users.Addresses
 {
     internal class UserAddressFacade : IUserAddressFacade
     {

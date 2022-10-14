@@ -3,7 +3,7 @@ using Shop.Application.SiteEntities.Sliders.Create;
 using Shop.Application.SiteEntities.Sliders.Edit;
 using Shop.Query.SiteEntities.DTOs;
 
-namespace Shop.Presentation.Facade.SiteEntities.Slider;
+namespace Shop.Persentation.Facade.Siteentities.Slider;
 
 public interface ISliderFacade
 {

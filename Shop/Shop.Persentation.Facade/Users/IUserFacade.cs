@@ -5,14 +5,14 @@ using Shop.Application.Users.Register;
 using Shop.Domain.UserAgg;
 using Shop.Query.Users.DTOs;
 
-namespace Shop.Presentation.Facade.Users
+namespace Shop.Persentation.Facade.Users
 {
     public interface IUserFacade
     {
         Task<OperationResult> RegisterUser(RegisterUserCommand command);
         Task<OperationResult> EditUser(EditUserCommand command);
         Task<OperationResult> CreateUser(CreateUserCommand command);
-      
+
         Task<UserDto?> GetUserByPhoneNumber(string phoneNumber);
         Task<UserDto?> GetUserById(long userId);
         Task<UserFilterResult> GetUserByFilter(UserFilterParams filterParams);

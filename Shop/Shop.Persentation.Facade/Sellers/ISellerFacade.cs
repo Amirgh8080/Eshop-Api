@@ -3,7 +3,7 @@ using Shop.Application.Sellers.Create;
 using Shop.Application.Sellers.Edit;
 using Shop.Query.Sellers.DTOs;
 
-namespace Shop.Presentation.Facade.Sellers;
+namespace Shop.Persentation.Facade.Sellers;
 
 public interface ISellerFacade
 {

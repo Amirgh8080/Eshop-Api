@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Shop.Domain\Shop.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Categories\Delete\" />
+  </ItemGroup>
+
 </Project>

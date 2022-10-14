@@ -7,7 +7,7 @@ using Shop.Query.Sellers.GetByFilter;
 using Shop.Query.Sellers.GetById;
 using Shop.Query.Sellers.GetByUserId;
 
-namespace Shop.Presentation.Facade.Sellers;
+namespace Shop.Persentation.Facade.Sellers;
 
 internal class SellerFacade : ISellerFacade
 {

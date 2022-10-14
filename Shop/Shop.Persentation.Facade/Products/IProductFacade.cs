@@ -6,7 +6,7 @@ using Shop.Application.Products.RemoveImage;
 using Shop.Query.Products.DTOs;
 using Shop.Query.Sellers.DTOs;
 
-namespace Shop.Presentation.Facade.Products;
+namespace Shop.Persentation.Facade.Products;
 
 public interface IProductFacade
 {

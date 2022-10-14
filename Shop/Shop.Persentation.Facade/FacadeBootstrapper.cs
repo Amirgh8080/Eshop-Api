@@ -2,14 +2,14 @@
 using Shop.Persentation.Facade.Categories;
 using Shop.Persentation.Facade.Comments;
 using Shop.Persentation.Facade.Orders;
-using Shop.Presentation.Facade.Products;
-using Shop.Presentation.Facade.Roles;
-using Shop.Presentation.Facade.Sellers;
-using Shop.Presentation.Facade.Sellers.Inventories;
-using Shop.Presentation.Facade.SiteEntities.Banner;
-using Shop.Presentation.Facade.SiteEntities.Slider;
-using Shop.Presentation.Facade.Users;
-using Shop.Presentation.Facade.Users.Addresses;
+using Shop.Persentation.Facade.Products;
+using Shop.Persentation.Facade.Roles;
+using Shop.Persentation.Facade.Sellers;
+using Shop.Persentation.Facade.Sellers.Inventories;
+using Shop.Persentation.Facade.Siteentities.Banner;
+using Shop.Persentation.Facade.Siteentities.Slider;
+using Shop.Persentation.Facade.Users;
+using Shop.Persentation.Facade.Users.Addresses;
 
 namespace Shop.Persentation.Facade;
 

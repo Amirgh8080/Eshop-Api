@@ -7,7 +7,7 @@ using Shop.Query.SiteEntities.DTOs;
 using Shop.Query.SiteEntities.Sliders.GetById;
 using Shop.Query.SiteEntities.Sliders.GetList;
 
-namespace Shop.Presentation.Facade.SiteEntities.Slider;
+namespace Shop.Persentation.Facade.Siteentities.Slider;
 
 internal class SliderFacade : ISliderFacade
 {

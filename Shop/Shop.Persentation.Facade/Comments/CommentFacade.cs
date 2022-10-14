@@ -1,5 +1,6 @@
 ﻿using Common.Application;
 using MediatR;
+using Shop.Application.Categories.Delete;
 using Shop.Application.Comments.ChangeStatus;
 using Shop.Application.Comments.Create;
 using Shop.Application.Comments.Edit;
@@ -32,6 +33,11 @@ public class CommentFacade:ICommentFacade
     public async Task<OperationResult> Edit(EditCommentCommand command)
     {
         return await _mediator.Send(command);
+    }
+
+    public async Task<OperationResult> Delete(long commandId)
+    {
+        return await _mediator.Send(new DeleteCategoryCommand(commandId));
     }
 
     public async Task<CommentDto?> GetCommentById(long id)

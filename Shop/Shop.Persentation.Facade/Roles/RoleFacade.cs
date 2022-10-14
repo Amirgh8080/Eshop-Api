@@ -6,7 +6,7 @@ using Shop.Query.Roles.DTOs;
 using Shop.Query.Roles.GetById;
 using Shop.Query.Roles.GetList;
 
-namespace Shop.Presentation.Facade.Roles;
+namespace Shop.Persentation.Facade.Roles;
 
 internal class RoleFacade : IRoleFacade
 {

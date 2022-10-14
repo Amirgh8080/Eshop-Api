@@ -11,6 +11,7 @@ public interface ICommentFacade
     Task<OperationResult> ChangeStatus(ChangeCommentStatusCommand command);
     Task<OperationResult> Create(CreateCommentCommand command);
     Task<OperationResult> Edit(EditCommentCommand command);
+    Task<OperationResult> Delete(long commandId);
 
 
 

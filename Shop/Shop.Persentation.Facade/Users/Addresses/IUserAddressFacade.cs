@@ -4,7 +4,7 @@ using Shop.Application.Users.DeleteAddress;
 using Shop.Application.Users.EditAddress;
 using Shop.Query.Users.DTOs;
 
-namespace Shop.Presentation.Facade.Users.Addresses
+namespace Shop.Persentation.Facade.Users.Addresses
 {
     public interface IUserAddressFacade
     {

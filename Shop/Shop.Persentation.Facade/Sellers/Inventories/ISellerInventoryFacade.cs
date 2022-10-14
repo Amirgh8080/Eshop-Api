@@ -7,7 +7,7 @@ using Shop.Query.Sellers.Inventories.GetById;
 using Shop.Query.Sellers.Inventories.GetByProductId;
 using Shop.Query.Sellers.Inventories.GetList;
 
-namespace Shop.Presentation.Facade.Sellers.Inventories;
+namespace Shop.Persentation.Facade.Sellers.Inventories;
 
 public interface ISellerInventoryFacade
 {

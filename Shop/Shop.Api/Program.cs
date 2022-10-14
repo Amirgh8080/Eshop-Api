@@ -1,6 +1,7 @@
 using Common.Application;
 using Common.Application.FileUtil.Interfaces;
 using Common.Application.FileUtil.Services;
+using Common.AspNetCore.Middlewares;
 using Shop.Config;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -31,7 +32,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
+app.UseApiCustomExceptionHandler();
 app.MapControllers();
 
 app.Run();
