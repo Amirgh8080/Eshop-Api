@@ -9,32 +9,16 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Products.Create
 {
-    public class CreateProductCommand:IBaseCommand
+    public class CreateProductCommand : IBaseCommand
     {
-        public CreateProductCommand(string title, string description, IFormFile imageFile,
-            long categoryId, long subCategoryId, long seconderySubCategory, SeoData seoData, 
-            string slug, Dictionary<string, string> specifications)
-        {
-            Title = title;
-            Description = description;
-            ImageFile = imageFile;
-            CategoryId = categoryId;
-            SubCategoryId = subCategoryId;
-            SeconderySubCategory = seconderySubCategory;
-            SeoData = seoData;
-            Slug = slug;
-            Specifications = specifications;
-        }
-
-        public string Title { get; private set; }
-        public string Description { get; private set; }
-        public IFormFile ImageFile { get; private set; }
-        public long CategoryId { get; private set; }
-        public long SubCategoryId { get; set; }
-        public long SeconderySubCategory { get; private set; }
-        public SeoData SeoData { get; private set; }
-        public string Slug { get; private set; }
-        public Dictionary<string,string> Specifications { get; private set; }
-
+        public string Title { get; set;}
+        public IFormFile ImageFile { get; set;}
+        public string Description { get; set;}
+        public long CategoryId { get; set;}
+        public long SubCategoryId { get; set;}
+        public long SecondarySubCategoryId { get; set;}
+        public string Slug { get; set;}
+        public SeoData SeoData { get; set;}
+        public Dictionary<string, string> Specifications { get; set;}
     }
 }

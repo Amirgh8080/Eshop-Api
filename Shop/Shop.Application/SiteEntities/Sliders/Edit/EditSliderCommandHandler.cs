@@ -2,7 +2,7 @@
 using Common.Application.FileUtil.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Shop.Application._Utilities;
-using Shop.Domain.SiteEntities.Repository;
+using Shop.Domain.SiteEntities.Repositories;
 
 namespace Shop.Application.SiteEntities.Sliders.Edit;
 

@@ -3,7 +3,7 @@ using Common.Application.FileUtil.Interfaces;
 using Common.Application.SecurityUtil;
 using Microsoft.AspNetCore.Http;
 using Shop.Application._Utilities;
-using Shop.Domain.SiteEntities.Repository;
+using Shop.Domain.SiteEntities.Repositories;
 
 namespace Shop.Application.SiteEntities.Banners.Edit;
 
@@ -24,12 +24,12 @@ public class EditBannerCommandHandler : IBaseCommandHandler<EditBannerCommand>
             return OperationResult.NotFound();
         var imageName = banner.ImageName;
         var oldImage = banner.ImageName;
-
+        
         if (request.ImageFile.IsImage())
             imageName = await _fileService
                 .SaveFileAndGenerateName(request.ImageFile, Directories.BannerImages);
 
-        banner.Edit(request.Link, imageName, request.Position);
+        banner.Edit(request.Link,imageName,request.Position);
 
         DeleteOldImage(request.ImageFile, oldImage);
         await _repository.Save();

@@ -1,7 +1,7 @@
 ﻿using Common.Application;
 using Common.Application.FileUtil.Interfaces;
 using Shop.Application._Utilities;
-using Shop.Domain.SiteEntities.Repository;
+using Shop.Domain.SiteEntities.Repositories;
 
 namespace Shop.Application.SiteEntities.Banners.Delete;
 
@@ -17,13 +17,13 @@ internal class DeleteBannerCommandHandler : IBaseCommandHandler<DeleteBannerComm
 
     public async Task<OperationResult> Handle(DeleteBannerCommand request, CancellationToken cancellationToken)
     {
-        var banner = await _repository.GetTracking(request.Id);
+        var banner =await _repository.GetTracking(request.Id);
         if (banner == null)
             return OperationResult.NotFound();
 
         _repository.Delete(banner);
         await _repository.Save();
-        _localFileService.DeleteFile(Directories.BannerImages, banner.ImageName);
+        _localFileService.DeleteFile(Directories.BannerImages,banner.ImageName);
         return OperationResult.Success();
     }
 }

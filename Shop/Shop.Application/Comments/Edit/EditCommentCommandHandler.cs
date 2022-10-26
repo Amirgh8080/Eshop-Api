@@ -1,5 +1,4 @@
-﻿
-using Common.Application;
+﻿using Common.Application;
 using Shop.Domain.CommentAgg;
 
 namespace Shop.Application.Comments.Edit
@@ -15,13 +14,12 @@ namespace Shop.Application.Comments.Edit
 
         public async Task<OperationResult> Handle(EditCommentCommand request, CancellationToken cancellationToken)
         {
-            var comment = await _repository.GetTracking(request.commentId);
-            if (comment == null || comment.UserId!= request.userId)
+            var comment = await _repository.GetTracking(request.CommentId);
+            if (comment == null || comment.UserId != request.UserId)
                 return OperationResult.NotFound();
 
-            comment.Edit(request.text);
+            comment.Edit(request.Text);
             await _repository.Save();
-
             return OperationResult.Success();
         }
     }

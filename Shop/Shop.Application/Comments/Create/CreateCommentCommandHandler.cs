@@ -1,23 +1,22 @@
-﻿
-using Common.Application;
+﻿using Common.Application;
 using Shop.Domain.CommentAgg;
 
 namespace Shop.Application.Comments.Create
 {
     public class CreateCommentCommandHandler : IBaseCommandHandler<CreateCommentCommand>
     {
-        private readonly ICommentRepository _commentRepository;
+        private readonly ICommentRepository _repository;
 
-        public CreateCommentCommandHandler(ICommentRepository commentRepository)
+        public CreateCommentCommandHandler(ICommentRepository repository)
         {
-            _commentRepository = commentRepository;
+            _repository = repository;
         }
 
         public async Task<OperationResult> Handle(CreateCommentCommand request, CancellationToken cancellationToken)
         {
-            var comment = new Comment(request.userId, request.productId, request.text);
-            await _commentRepository.AddAsync(comment);
-            await _commentRepository.Save();
+            var comment = new Comment(request.UserId, request.ProductId, request.Text);
+             _repository.Add(comment);
+            await _repository.Save();
             return OperationResult.Success();
         }
     }

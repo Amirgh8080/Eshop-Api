@@ -11,51 +11,50 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.ProductAgg
 {
-    public class Product:AggregateRoot
+    public class Product : AggregateRoot
     {
+        private Product()
+        {
+        }
+
         public string Title { get; private set; }
-        public string Description { get; private set; }
         public string ImageName { get; private set; }
+        public string Description { get; private set; }
         public long CategoryId { get; private set; }
-        public long SubCategoryId { get; set; }
-        public long? SeconderySubCategory { get; private set; }
-        public SeoData SeoData { get; private set; }
+        public long SubCategoryId { get; private set; }
+        public long? SecondarySubCategoryId { get; private set; }
         public string Slug { get; private set; }
+        public SeoData SeoData { get; private set; }
         public List<ProductImage> Images { get; private set; }
         public List<ProductSpecification> Specifications { get; private set; }
 
-        private Product()
+        public Product(string title, string imageName, string description, long categoryId,
+           long subCategoryId, long? secondarySubCategoryId, IProductDomainService domainService,
+           string slug, SeoData seoData)
         {
-
-        }
-
-        public Product(string title, string description, long categoryId, long subCategoryId,
-           long seconderySubCategory, string slug, SeoData seoData, string imageName, IProductDomainService service)
-        {
-            Guard(title, slug, description, service);
             NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
+            Guard(title, slug, description, domainService);
 
             Title = title;
+            ImageName = imageName;
             Description = description;
             CategoryId = categoryId;
             SubCategoryId = subCategoryId;
-            SeconderySubCategory = seconderySubCategory;
+            SecondarySubCategoryId = secondarySubCategoryId;
             Slug = slug.ToSlug();
             SeoData = seoData;
-            ImageName = imageName;
         }
 
-        public void Edit(string title, string description, long categoryId, long subCategoryId,
-         long seconderySubCategory, string slug, SeoData seoData,
-         IProductDomainService service)
+        public void Edit(string title, string description, long categoryId,
+            long subCategoryId, long secondarySubCategoryId, string slug, IProductDomainService domainService
+            , SeoData seoData)
         {
-            Guard(title,slug,description, service);
-
+            Guard(title, slug, description, domainService);
             Title = title;
             Description = description;
             CategoryId = categoryId;
             SubCategoryId = subCategoryId;
-            SeconderySubCategory = seconderySubCategory;
+            SecondarySubCategoryId = secondarySubCategoryId;
             Slug = slug.ToSlug();
             SeoData = seoData;
         }
@@ -71,34 +70,33 @@ namespace Shop.Domain.ProductAgg
             image.ProductId = Id;
             Images.Add(image);
         }
-        public string RemoveImage(long imageId)
+
+        public string RemoveImage(long id)
         {
-            var image = Images.FirstOrDefault(i => i.Id == imageId);
+            var image = Images.FirstOrDefault(f => f.Id == id);
             if (image == null)
-                throw new NullOrEmptyDomainDataException("عکس یافت نشد.");
+                throw new NullOrEmptyDomainDataException("عکس یافت نشد");
 
             Images.Remove(image);
             return image.ImageName;
         }
+
         public void SetSpecification(List<ProductSpecification> specifications)
         {
-            specifications.ForEach(i=>i.ProductId=Id);
+            specifications.ForEach(s => s.ProductId = Id);
             Specifications = specifications;
         }
 
-        private void Guard(string title,string slug, string description,
-            IProductDomainService service)
+        private void Guard(string title, string slug, string description,
+            IProductDomainService domainService)
         {
             NullOrEmptyDomainDataException.CheckString(title, nameof(title));
             NullOrEmptyDomainDataException.CheckString(description, nameof(description));
             NullOrEmptyDomainDataException.CheckString(slug, nameof(slug));
 
-
             if (slug != Slug)
-                if (service.SlugIsExist(slug.ToSlug()))
+                if (domainService.SlugIsExist(slug.ToSlug()))
                     throw new SlugIsDuplicateException();
-
-            
         }
     }
 }

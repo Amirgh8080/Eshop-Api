@@ -14,9 +14,9 @@ WORKDIR "/src/Shop/Shop.Api"
 RUN dotnet build "Shop.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Shop.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Shop.Api.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Shop.Api.dll"]
+ENTRYPOINT ["dotnet", "Shop.Api.dll"] #Run in Background -> Application ro Tooye Background Negah Midare Ta Container Az Bayn Nare

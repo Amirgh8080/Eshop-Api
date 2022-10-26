@@ -4,20 +4,16 @@ using FluentValidation;
 
 namespace Shop.Application.Products.AddImage
 {
-    public class AddProductImageCommandValidator:AbstractValidator<AddProductImageCommand>
+    public class AddProductImageCommandValidator : AbstractValidator<AddProductImageCommand>
     {
         public AddProductImageCommandValidator()
         {
-            RuleFor(r => r.ImageFile)
+            RuleFor(b => b.ImageFile)
                 .NotNull().WithMessage(ValidationMessages.required("عکس"))
                 .JustImageFile();
-            RuleFor(r => r.Sequence)
+
+            RuleFor(b => b.Sequence)
                 .GreaterThanOrEqualTo(0);
-                
         }
     }
-
 }
-
-
-

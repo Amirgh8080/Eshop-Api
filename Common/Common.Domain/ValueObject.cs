@@ -6,6 +6,7 @@ namespace Common.Domain;
 public class IgnoreMemberAttribute : Attribute
 {
 }
+
 public abstract class ValueObject : IEquatable<ValueObject>
 {
     private List<PropertyInfo> properties;

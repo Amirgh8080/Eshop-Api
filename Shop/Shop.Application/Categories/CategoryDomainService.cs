@@ -11,8 +11,9 @@ public class CategoryDomainService:ICategoryDomainService
     {
         _repository = repository;
     }
+
     public bool IsSlugExist(string slug)
     {
-        return _repository.Exists(c => c.Slug == slug);
+        return _repository.Exists(s => s.Slug == slug);
     }
 }

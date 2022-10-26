@@ -1,6 +1,6 @@
 ﻿using Common.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Shop.Persentation.Facade.Users;
+using Shop.Presentation.Facade.Users;
 
 namespace Shop.Api.Infrastructure.JwtUtil;
 
@@ -17,12 +17,12 @@ public class CustomJwtValidation
     {
         var userId = context.Principal.GetUserId();
         var jwtToken = context.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-       // var token = await _userFacade.GetUserTokenByJwtToken(jwtToken);
-        //if (token == null)
-        //{
-        //    context.Fail("Token NotFound");
-        //    return;
-        //}
+        var token = await _userFacade.GetUserTokenByJwtToken(jwtToken);
+        if (token == null)
+        {
+            context.Fail("Token NotFound");
+            return;
+        }
 
         var user = await _userFacade.GetUserById(userId);
         if (user == null || user.IsActive == false)

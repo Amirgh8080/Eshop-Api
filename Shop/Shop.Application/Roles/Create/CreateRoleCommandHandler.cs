@@ -2,31 +2,28 @@
 using Shop.Domain.RoleAgg;
 using Shop.Domain.RoleAgg.Repository;
 
-namespace Shop.Application.Roles.Create
+namespace Shop.Application.Roles.Create;
+
+public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
 {
-    public class CreateRoleCommandHandler : IBaseCommandHandler<CreateRoleCommand>
+    private readonly IRoleRepository _repository;
+
+    public CreateRoleCommandHandler(IRoleRepository repository)
     {
-        private readonly IRoleRepository _repository;
+        _repository = repository;
+    }
 
-        public CreateRoleCommandHandler(IRoleRepository repository)
+    public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    {
+        var permissions = new List<RolePermission>();
+        request.Permissions.ForEach(f =>
         {
-            _repository = repository;
-        }
+            permissions.Add(new RolePermission(f));
+        });
+        var role = new Role(request.Title, permissions);
+         _repository.Add(role);
+        await _repository.Save();
 
-        public async Task<OperationResult> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
-        {
-            var permissions = new List<RolePermission>();
-            request.Permissions.ForEach(f =>
-            {
-                permissions.Add(new RolePermission(f));
-            });
-
-            var role = new Role(request.Title,permissions);
-
-           await _repository.AddAsync(role);
-           await _repository.Save();
-
-            return OperationResult.Success();
-        }
+        return OperationResult.Success();
     }
 }

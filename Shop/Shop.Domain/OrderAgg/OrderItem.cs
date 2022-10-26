@@ -5,27 +5,28 @@ namespace Shop.Domain.OrderAgg
 {
     public class OrderItem : BaseEntity
     {
-        public OrderItem(long inverntoryId, int count, int price)
+        public OrderItem(long inventoryId, int count, int price)
         {
             PriceGuard(price);
             CountGuard(count);
-            InverntoryId = inverntoryId;
+
+            InventoryId = inventoryId;
             Count = count;
             Price = price;
         }
 
         public long OrderId { get; internal set; }
-        public long InverntoryId { get; private set; }
+        public long InventoryId { get; private set; }
         public int Count { get; private set; }
         public int Price { get; private set; }
-        public int TotalPrice => Count * Price;
+        public int TotalPrice => Price * Count;
 
-
-        public void IncreaceCount(int count)
+        public void IncreaseCount(int count)
         {
             Count += count;
         }
-        public void DecreaceCount(int count)
+
+        public void DecreaseCount(int count)
         {
             if (Count == 1)
                 return;
@@ -52,13 +53,12 @@ namespace Shop.Domain.OrderAgg
         {
             if (newPrice < 1)
                 throw new InvalidDomainDataException("مبلغ کالا نامعتبر است");
-
         }
+
         public void CountGuard(int count)
         {
             if (count < 1)
                 throw new InvalidDomainDataException();
-
         }
     }
 }

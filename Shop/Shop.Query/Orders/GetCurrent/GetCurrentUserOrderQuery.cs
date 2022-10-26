@@ -1,7 +1,7 @@
 using Common.Query;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure.Persistent.Dapper;
-using Shop.Infrastructure.Persistent.EF;
+using Shop.Infrastructure.Persistent.Ef;
 using Shop.Query.Orders;
 using Shop.Query.Orders.DTOs;
 
@@ -22,7 +22,7 @@ public class GetCurrentUserOrderQueryHandler : IQueryHandler<GetCurrentUserOrder
     public async Task<OrderDto?> Handle(GetCurrentUserOrderQuery request, CancellationToken cancellationToken)
     {
         var order = await _shopContext.Orders
-            .FirstOrDefaultAsync(f => f.UserId == request.UserId && f.Status==Shop.Domain.OrderAgg.OrderStatus.Pennding, cancellationToken);
+            .FirstOrDefaultAsync(f => f.UserId == request.UserId && f.Status==Shop.Domain.OrderAgg.OrderStatus.Pending, cancellationToken);
         if (order == null)
             return null;
 

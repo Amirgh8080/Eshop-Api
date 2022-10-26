@@ -1,6 +1,6 @@
 ﻿using Common.Query;
 using Microsoft.EntityFrameworkCore;
-using Shop.Infrastructure.Persistent.EF;
+using Shop.Infrastructure.Persistent.Ef;
 using Shop.Query.Comments.DTOs;
 
 namespace Shop.Query.Comments.GetByFilter;

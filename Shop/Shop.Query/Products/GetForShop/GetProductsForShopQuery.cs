@@ -4,9 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Shop.Domain.SellerAgg;
 using Shop.Infrastructure.Persistent.Dapper;
 using Shop.Infrastructure.Persistent.Ef;
-using Shop.Infrastructure.Persistent.EF;
-using Shop.Query.Category;
-using Shop.Query.Category.DTOs;
+using Shop.Query.Categories;
+using Shop.Query.Categories.DTOs;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Query.Products.GetForShop;

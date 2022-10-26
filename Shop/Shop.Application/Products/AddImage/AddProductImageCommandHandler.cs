@@ -23,17 +23,13 @@ namespace Shop.Application.Products.AddImage
             if (product == null)
                 return OperationResult.NotFound();
 
-            var imageName =await _fileService
-                .SaveFileAndGenerateName(request.ImageFile, Directories.ProductGallery);
-            var image = new ProductImage(imageName, request.Sequence);
-            
-            product.AddImage(image);
+            var imageName = await _fileService
+                .SaveFileAndGenerateName(request.ImageFile, Directories.ProductGalleryImage);
+
+            var productImage = new ProductImage(imageName, request.Sequence);
+            product.AddImage(productImage);
             await _repository.Save();
             return OperationResult.Success();
         }
     }
-
 }
-
-
-

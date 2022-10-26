@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Domain.OrderAgg.ValueObjects
 {
-    public class OrderDiscount:ValueObject
+    public class OrderDiscount : ValueObject
     {
         public OrderDiscount(string discountTitle, int discountAmount)
         {

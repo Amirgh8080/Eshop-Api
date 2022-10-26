@@ -21,7 +21,7 @@ public class DeleteCommentCommandHandler : IBaseCommandHandler<DeleteCommentComm
         if(comment == null || comment.UserId!=request.UserId)
             return OperationResult.NotFound();
 
-        //await _repository.DeleteAndSave(comment);
+        await _repository.DeleteAndSave(comment);
         return OperationResult.Success();
     }
 }

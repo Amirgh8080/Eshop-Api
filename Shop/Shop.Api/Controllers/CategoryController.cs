@@ -1,67 +1,77 @@
-﻿using Common.Application;
+﻿using System.Net;
+using Common.Application;
 using Common.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Shop.Application.Categories.Add_Child;
+using Shop.Api.Infrastructure.Security;
+using Shop.Application.Categories.AddChild;
 using Shop.Application.Categories.Create;
 using Shop.Application.Categories.Edit;
-using Shop.Persentation.Facade.Categories;
-using Shop.Query.Category.DTOs;
+using Shop.Domain.RoleAgg.Enums;
+using Shop.Presentation.Facade.Categories;
+using Shop.Query.Categories.DTOs;
 
-namespace Shop.Api.Controllers
+namespace Shop.Api.Controllers;
+
+
+[PermissionChecker(Permission.Category_Management)]
+public class CategoryController : ApiController
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CategoryController : ApiController
+    private readonly ICategoryFacade _categoryFacade;
+
+    public CategoryController(ICategoryFacade categoryFacade)
     {
-        private readonly ICategoryFacade _facade;
+        _categoryFacade = categoryFacade;
+    }
 
-        public CategoryController(ICategoryFacade facade)
-        {
-            _facade = facade;
-        }
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<ApiResult<List<CategoryDto>>> GetCategories()
+    {
+        var result = await _categoryFacade.GetCategories();
+        return QueryResult(result);
+    }
 
-        [HttpGet]
-        public async Task<ApiResult<List<CategoryDto>>> GetCategories()
-        {
-            var result = await _facade.GetAllCategories();
-            return QueryResult(result);
-        }
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public async Task<ApiResult<CategoryDto>> GetCategoryById(long id)
+    {
+        var result = await _categoryFacade.GetCategoryById(id);
+        return QueryResult(result);
+    }
+    [HttpGet("getChild/{parentId}")]
+    [AllowAnonymous]
+    public async Task<ApiResult<List<ChildCategoryDto>>> GetCategoriesByParentId(long parentId)
+    {
+        var result = await _categoryFacade.GetCategoriesByParentId(parentId);
+        return QueryResult(result);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ApiResult<CategoryDto>> GetCategoryById(long id)
-        {
-            var result = await _facade.GetById(id);
-            return QueryResult(result);
-        }
-        [HttpGet("GetChildren/{parentId}")]
-        public async Task<ApiResult<List<ChildCategoryDto>>> GetCategoryByParentId(long parentId)
-        {
-            var result = await _facade.GetCategoriesByParentId(parentId);
-            return QueryResult(result);
-        }
-        [HttpPost]
-        public async Task<ApiResult> CreateCategory(CreateCategoryCommand command)
-        {
-            var result = await _facade.Create(command);
-            return CommandResult(result);
-        }
-        [HttpPut]
-        public async Task<ApiResult> EditCategory(EditCategoryCommand command)
-        {
-            var result = await _facade.Edit(command);
-            return CommandResult(result);
-        }
-        [HttpPost("AddChild")]
-        public async Task<ApiResult> AddCategoryChild(AddChildCategoryCommand command)
-        {
-            var result = await _facade.AddChild(command);
-            return CommandResult(result);
-        }
-        [HttpDelete("{categoryId}")]
-        public async Task<ApiResult> DeleteCategory(long categoryId)
-        {
-            var result = await _facade.Delete(categoryId);
-            return CommandResult(result);
-        }
+    [HttpPost]
+    public async Task<ApiResult<long>> CreateCategory(CreateCategoryCommand command)
+    {
+        var result = await _categoryFacade.Create(command);
+        var url = Url.Action("GetCategoryById", "Category", new {id = result.Data}, Request.Scheme);
+        return CommandResult(result,HttpStatusCode.Created,url);
+    }
+    [HttpPost("AddChild")]
+    public async Task<ApiResult<long>> CreateCategory(AddChildCategoryCommand command)
+    {
+        var result = await _categoryFacade.AddChild(command);
+        var url = Url.Action("GetCategoryById", "Category", new { id = result.Data }, Request.Scheme);
+        return CommandResult(result, HttpStatusCode.Created, url);
+    }
+    [HttpPut]
+    public async Task<ApiResult> EditCategory(EditCategoryCommand command)
+    {
+        var result = await _categoryFacade.Edit(command);
+        return CommandResult(result);
+    }
+    [HttpDelete("{categoryId}")]
+    public async Task<ApiResult> RemoveCategory(long categoryId)
+    {
+        var result = await _categoryFacade.Remove(categoryId);
+        return CommandResult(result);
     }
 }

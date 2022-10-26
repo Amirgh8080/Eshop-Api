@@ -10,54 +10,50 @@ namespace Shop.Application.Products.Edit
 {
     internal class EditProductCommandHandler : IBaseCommandHandler<EditProductCommand>
     {
-        private readonly IProductRepository _repository;
         private readonly IProductDomainService _domainService;
-        private readonly IFileService _localFileService;
+        private readonly IProductRepository _repository;
+        private readonly IFileService _fileService;
 
-        public EditProductCommandHandler(IProductRepository repository, IProductDomainService domainService, IFileService localFileService)
+        public EditProductCommandHandler(IProductDomainService domainService, IProductRepository repository, IFileService fileService)
         {
-            _repository = repository;
             _domainService = domainService;
-            _localFileService = localFileService;
+            _repository = repository;
+            _fileService = fileService;
         }
 
         public async Task<OperationResult> Handle(EditProductCommand request, CancellationToken cancellationToken)
         {
             var product = await _repository.GetTracking(request.ProductId);
-
             if (product == null)
                 return OperationResult.NotFound();
 
             product.Edit(request.Title, request.Description, request.CategoryId, request.SubCategoryId,
-                request.SeconderySubCategory, request.Slug, request.SeoData, _domainService);
+                request.SecondarySubCategoryId, request.Slug, _domainService, request.SeoData);
 
             var oldImage = product.ImageName;
 
             if (request.ImageFile != null)
             {
-                var imageName = await _localFileService
+                var imageName = await _fileService
                     .SaveFileAndGenerateName(request.ImageFile, Directories.ProductImages);
-
                 product.SetProductImage(imageName);
             }
-
             var specifications = new List<ProductSpecification>();
             request.Specifications.ToList().ForEach(specification =>
             {
                 specifications.Add(new ProductSpecification(specification.Key, specification.Value));
             });
             product.SetSpecification(specifications);
-
             await _repository.Save();
             RemoveOldImage(request.ImageFile, oldImage);
             return OperationResult.Success();
         }
 
-        public void RemoveOldImage(IFormFile imageFile,string oldImage)
+        private void RemoveOldImage(IFormFile imageFile, string oldImageName)
         {
             if (imageFile != null)
             {
-                _localFileService.DeleteFile(Directories.ProductImages,oldImage);
+                _fileService.DeleteFile(Directories.ProductImages, oldImageName);
             }
         }
     }

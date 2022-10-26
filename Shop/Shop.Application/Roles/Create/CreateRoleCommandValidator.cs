@@ -1,14 +1,13 @@
 ﻿using Common.Application.Validation;
 using FluentValidation;
 
-namespace Shop.Application.Roles.Create
+namespace Shop.Application.Roles.Create;
+
+public class CreateRoleCommandValidator : AbstractValidator<CreateRoleCommand>
 {
-    public class CreateRoleCommandValidator:AbstractValidator<CreateRoleCommand>
+    public CreateRoleCommandValidator()
     {
-        public CreateRoleCommandValidator()
-        {
-            RuleFor(r => r.Title)
-                .NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
-        }
+        RuleFor(r => r.Title)
+            .NotEmpty().WithMessage(ValidationMessages.required("عنوان"));
     }
 }

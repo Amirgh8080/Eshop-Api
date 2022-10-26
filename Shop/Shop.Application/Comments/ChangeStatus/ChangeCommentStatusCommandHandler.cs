@@ -1,6 +1,4 @@
-﻿
-
-using Common.Application;
+﻿using Common.Application;
 using Shop.Domain.CommentAgg;
 
 namespace Shop.Application.Comments.ChangeStatus
@@ -16,7 +14,7 @@ namespace Shop.Application.Comments.ChangeStatus
 
         public async Task<OperationResult> Handle(ChangeCommentStatusCommand request, CancellationToken cancellationToken)
         {
-            var comment = await _repository.GetTracking(request.CommentId);
+            var comment = await _repository.GetTracking(request.Id);
             if (comment == null)
                 return OperationResult.NotFound();
 
@@ -25,5 +23,4 @@ namespace Shop.Application.Comments.ChangeStatus
             return OperationResult.Success();
         }
     }
-   
 }

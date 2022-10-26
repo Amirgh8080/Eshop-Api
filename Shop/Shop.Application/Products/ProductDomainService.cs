@@ -3,7 +3,7 @@ using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Application.Products;
 
-public class ProductDomainService : IProductDomainService
+public class ProductDomainService:IProductDomainService
 {
     private readonly IProductRepository _repository;
 
@@ -11,8 +11,9 @@ public class ProductDomainService : IProductDomainService
     {
         _repository = repository;
     }
+
     public bool SlugIsExist(string slug)
     {
-       return _repository.Exists(p => p.Slug == slug);
+        return _repository.Exists(s => s.Slug == slug);
     }
 }

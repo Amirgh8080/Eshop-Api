@@ -4,11 +4,10 @@
     {
         public BaseDomainException()
         {
-
         }
+
         public BaseDomainException(string message) : base(message)
         {
-
         }
     }
 }

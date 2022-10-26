@@ -1,6 +1,7 @@
 ﻿using Common.Domain.ValueObjects;
 using Common.Query;
 using Shop.Domain.ProductAgg;
+using Shop.Query.Categories.DTOs;
 
 namespace Shop.Query.Products.DTOs;
 

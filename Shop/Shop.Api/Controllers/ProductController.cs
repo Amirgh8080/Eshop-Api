@@ -2,17 +2,19 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Api.ViewModels.Products;
 using Shop.Application.Products.AddImage;
 using Shop.Application.Products.Create;
 using Shop.Application.Products.Edit;
 using Shop.Application.Products.RemoveImage;
 using Shop.Domain.RoleAgg.Enums;
-using Shop.Persentation.Facade.Products;
+using Shop.Presentation.Facade.Products;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Api.Controllers;
 
+[PermissionChecker(Permission.CRUD_Product)]
 public class ProductController : ApiController
 {
     private readonly IProductFacade _productFacade;
@@ -51,31 +53,31 @@ public class ProductController : ApiController
         return QueryResult(product);
     }
 
-    //[AllowAnonymous]
-    //[HttpGet("single/{slug}")]
-    //public async Task<ApiResult<SingleProductDto?>> GetSingleProduct(string slug)
-    //{
-    //    var product = await _productFacade.GetProductBySlugForSinglePage(slug);
-    //    return QueryResult(product);
-    //}
+    [AllowAnonymous]
+    [HttpGet("single/{slug}")]
+    public async Task<ApiResult<SingleProductDto?>> GetSingleProduct(string slug)
+    {
+        var product = await _productFacade.GetProductBySlugForSinglePage(slug);
+        return QueryResult(product);
+    }
 
-    //[HttpPost]
-    //public async Task<ApiResult> CreateProduct([FromForm] CreateProductViewModel command)
-    //{
-    //    var result = await _productFacade.CreateProduct(new CreateProductCommand()
-    //    {
-    //        SeoData = command.SeoData.Map(),
-    //        CategoryId = command.CategoryId,
-    //        Description = command.Description,
-    //        ImageFile = command.ImageFile,
-    //        SecondarySubCategoryId = command.SecondarySubCategoryId,
-    //        Slug = command.Slug,
-    //        Specifications = command.GetSpecification(),
-    //        SubCategoryId = command.SubCategoryId,
-    //        Title = command.Title
-    //    });
-    //    return CommandResult(result);
-    //}
+    [HttpPost]
+    public async Task<ApiResult> CreateProduct([FromForm] CreateProductViewModel command)
+    {
+        var result = await _productFacade.CreateProduct(new CreateProductCommand()
+        {
+            SeoData = command.SeoData.Map(),
+            CategoryId = command.CategoryId,
+            Description = command.Description,
+            ImageFile = command.ImageFile,
+            SecondarySubCategoryId = command.SecondarySubCategoryId,
+            Slug = command.Slug,
+            Specifications = command.GetSpecification(),
+            SubCategoryId = command.SubCategoryId,
+            Title = command.Title
+        });
+        return CommandResult(result);
+    }
 
     [HttpPost("images")]
     public async Task<ApiResult> AddImage([FromForm] AddProductImageCommand command)
@@ -90,13 +92,13 @@ public class ProductController : ApiController
         var result = await _productFacade.RemoveImage(command);
         return CommandResult(result);
     }
-    //[HttpPut]
-    //public async Task<ApiResult> EditProduct([FromForm] EditProductViewModel command)
-    //{
-    //    //var result = await _productFacade.EditProduct(new EditProductCommand(command.ProductId,command.Title,command.ImageFile,
-    //    //    command.Description,command.CategoryId,command.SubCategoryId,command.SecondarySubCategoryId,command.Slug,command.SeoData.Map(),
-    //    //    command.GetSpecification()));
+    [HttpPut]
+    public async Task<ApiResult> EditProduct([FromForm] EditProductViewModel command)
+    {
+        var result = await _productFacade.EditProduct(new EditProductCommand(command.ProductId,command.Title,command.ImageFile,
+            command.Description,command.CategoryId,command.SubCategoryId,command.SecondarySubCategoryId,command.Slug,command.SeoData.Map(),
+            command.GetSpecification()));
 
-    //    return CommandResult(result);
-    //}
+        return CommandResult(result);
+    }
 }

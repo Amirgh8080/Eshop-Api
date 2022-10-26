@@ -1,4 +1,4 @@
-﻿namespace Shop.Domain.UserAgg.Enums
+﻿namespace Shop.Domain.UserAgg
 {
     public enum WalletType
     {

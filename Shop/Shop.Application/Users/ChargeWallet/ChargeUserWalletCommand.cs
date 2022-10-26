@@ -1,7 +1,7 @@
 ﻿using Common.Application;
 using Common.Application.Validation;
 using FluentValidation;
-using Shop.Domain.UserAgg.Enums;
+using Shop.Domain.UserAgg;
 
 namespace Shop.Application.Users.ChargeWallet;
 

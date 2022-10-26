@@ -2,5 +2,5 @@
 
 namespace Shop.Application.SiteEntities.Sliders.Delete;
 
-public record DeleteSliderCommand(long Id) : IBaseCommand
+public record DeleteSliderCommand(long Id):IBaseCommand
 ;

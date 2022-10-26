@@ -14,7 +14,7 @@ namespace Shop.Domain.ProductAgg
             Value = value;
         }
 
-        public long ProductId { get;internal set; }
+        public long ProductId { get; internal set; }
         public string Key { get; private set; }
         public string Value { get; private set; }
     }

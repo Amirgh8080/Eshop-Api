@@ -4,7 +4,6 @@ using FluentValidation;
 
 namespace Shop.Application.Products.Create
 {
-
     public class CreateProductCommandValidator : AbstractValidator<CreateProductCommand>
     {
         public CreateProductCommandValidator()
@@ -22,5 +21,4 @@ namespace Shop.Application.Products.Create
                .JustImageFile();
         }
     }
-
 }

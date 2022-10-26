@@ -1,7 +1,6 @@
 ﻿using Common.Query;
 using Microsoft.EntityFrameworkCore;
 using Shop.Infrastructure.Persistent.Ef;
-using Shop.Infrastructure.Persistent.EF;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Query.Products.GetById;

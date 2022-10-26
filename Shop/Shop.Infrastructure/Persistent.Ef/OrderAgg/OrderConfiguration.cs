@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Shop.Domain.OrderAgg;
 
-namespace Shop.Infrastructure.Persistent.EF.OrderAgg;
+namespace Shop.Infrastructure.Persistent.Ef.OrderAgg;
 
-internal class OrderConfiguration:IEntityTypeConfiguration<Order>
+internal class OrderConfiguration : IEntityTypeConfiguration<Order>
 {
     public void Configure(EntityTypeBuilder<Order> builder)
     {
@@ -17,7 +17,7 @@ internal class OrderConfiguration:IEntityTypeConfiguration<Order>
         {
             option.ToTable("Items", "order");
             option.HasKey(b => b.Id);
-         //   option.HasIndex(b => b.InventoryId);
+            option.HasIndex(b => b.InventoryId);
             option.HasIndex(b => b.OrderId);
         });
 
@@ -61,7 +61,5 @@ internal class OrderConfiguration:IEntityTypeConfiguration<Order>
                 .IsRequired(false)
                 .HasMaxLength(100);
         });
-
-
     }
 }

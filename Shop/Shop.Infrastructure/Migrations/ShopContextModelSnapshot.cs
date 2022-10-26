@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Shop.Infrastructure.Persistent.EF;
+using Shop.Infrastructure.Persistent.Ef;
 
 #nullable disable
 
@@ -17,7 +17,7 @@ namespace Shop.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.10")
+                .HasAnnotation("ProductVersion", "6.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -29,6 +29,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<long?>("ParentId")
                         .HasColumnType("bigint");
@@ -60,6 +63,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
@@ -89,6 +95,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
 
@@ -116,6 +125,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<long>("CategoryId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -125,7 +137,7 @@ namespace Shop.Infrastructure.Migrations
                         .HasMaxLength(110)
                         .HasColumnType("nvarchar(110)");
 
-                    b.Property<long?>("SeconderySubCategory")
+                    b.Property<long?>("SecondarySubCategoryId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Slug")
@@ -157,6 +169,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(60)
@@ -174,6 +189,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("LastUpdate")
                         .HasColumnType("datetime2");
@@ -208,6 +226,9 @@ namespace Shop.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("ImageName")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -237,6 +258,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<int>("Cost")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(120)
@@ -254,6 +278,9 @@ namespace Shop.Infrastructure.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ImageName")
                         .IsRequired()
@@ -286,6 +313,9 @@ namespace Shop.Infrastructure.Migrations
                     b.Property<string>("AvatarName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -330,7 +360,7 @@ namespace Shop.Infrastructure.Migrations
             modelBuilder.Entity("Shop.Domain.CategoryAgg.Category", b =>
                 {
                     b.HasOne("Shop.Domain.CategoryAgg.Category", null)
-                        .WithMany("Children")
+                        .WithMany("Childs")
                         .HasForeignKey("ParentId");
 
                     b.OwnsOne("Common.Domain.ValueObjects.SeoData", "SeoData", b1 =>
@@ -393,6 +423,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<string>("Family")
                                 .IsRequired()
                                 .HasMaxLength(50)
@@ -416,7 +449,7 @@ namespace Shop.Infrastructure.Migrations
                                 .HasMaxLength(12)
                                 .HasColumnType("nvarchar(12)");
 
-                            b1.Property<string>("PostaAdderss")
+                            b1.Property<string>("PostalAddress")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
@@ -454,7 +487,10 @@ namespace Shop.Infrastructure.Migrations
                             b1.Property<int>("Count")
                                 .HasColumnType("int");
 
-                            b1.Property<long>("InverntoryId")
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<long>("InventoryId")
                                 .HasColumnType("bigint");
 
                             b1.Property<long>("OrderId")
@@ -464,6 +500,8 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("int");
 
                             b1.HasKey("Id");
+
+                            b1.HasIndex("InventoryId");
 
                             b1.HasIndex("OrderId");
 
@@ -577,12 +615,15 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<string>("ImageName")
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
 
-                            b1.Property<int>("Secquence")
+                            b1.Property<int>("Sequence")
                                 .HasColumnType("int");
 
                             b1.HasKey("ProductId", "Id");
@@ -603,6 +644,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("bigint");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Key")
                                 .IsRequired()
@@ -642,6 +686,9 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<int>("Permission")
                                 .HasColumnType("int");
 
@@ -668,6 +715,9 @@ namespace Shop.Infrastructure.Migrations
 
                             b1.Property<int>("Count")
                                 .HasColumnType("int");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<int?>("DiscountPercentage")
                                 .HasColumnType("int");
@@ -716,6 +766,9 @@ namespace Shop.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("nvarchar(100)");
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Family")
                                 .IsRequired()
@@ -792,6 +845,9 @@ namespace Shop.Infrastructure.Migrations
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
 
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
                             b1.Property<long>("RoleId")
                                 .HasColumnType("bigint");
 
@@ -800,6 +856,51 @@ namespace Shop.Infrastructure.Migrations
                             b1.HasIndex("UserId");
 
                             b1.ToTable("Roles", "user");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.OwnsMany("Shop.Domain.UserAgg.UserToken", "Tokens", b1 =>
+                        {
+                            b1.Property<long>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("bigint");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Device")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("nvarchar(100)");
+
+                            b1.Property<string>("HashJwtToken")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)");
+
+                            b1.Property<string>("HashRefreshToken")
+                                .IsRequired()
+                                .HasMaxLength(250)
+                                .HasColumnType("nvarchar(250)");
+
+                            b1.Property<DateTime>("RefreshTokenExpireDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<DateTime>("TokenExpireDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<long>("UserId")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("UserId");
+
+                            b1.ToTable("Tokens", "user");
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
@@ -815,6 +916,9 @@ namespace Shop.Infrastructure.Migrations
                                 .HasColumnType("bigint");
 
                             SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<long>("Id"), 1L, 1);
+
+                            b1.Property<DateTime>("CreationDate")
+                                .HasColumnType("datetime2");
 
                             b1.Property<string>("Description")
                                 .HasMaxLength(500)
@@ -846,12 +950,14 @@ namespace Shop.Infrastructure.Migrations
 
                     b.Navigation("Roles");
 
+                    b.Navigation("Tokens");
+
                     b.Navigation("Wallets");
                 });
 
             modelBuilder.Entity("Shop.Domain.CategoryAgg.Category", b =>
                 {
-                    b.Navigation("Children");
+                    b.Navigation("Childs");
                 });
 #pragma warning restore 612, 618
         }

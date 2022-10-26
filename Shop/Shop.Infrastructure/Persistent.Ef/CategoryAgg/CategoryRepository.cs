@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Domain.CategoryAgg;
 using Shop.Infrastructure._Utilities;
-using Shop.Infrastructure.Persistent.EF;
 
 namespace Shop.Infrastructure.Persistent.Ef.CategoryAgg;
 
@@ -15,8 +14,8 @@ internal class CategoryRepository : BaseRepository<Category>, ICategoryRepositor
     public async Task<bool> DeleteCategory(long categoryId)
     {
         var category =await Context.Categories
-            .Include(c=>c.Children)
-            .ThenInclude(c=>c.Children).FirstOrDefaultAsync(f => f.Id == categoryId);
+            .Include(c=>c.Childs)
+            .ThenInclude(c=>c.Childs).FirstOrDefaultAsync(f => f.Id == categoryId);
         if (category == null)
             return false;
 
@@ -24,16 +23,16 @@ internal class CategoryRepository : BaseRepository<Category>, ICategoryRepositor
         var isExistProduct = await Context.Products
             .AnyAsync(f => f.CategoryId == categoryId ||
                            f.SubCategoryId == categoryId ||
-                           f.SeconderySubCategory == categoryId);
+                           f.SecondarySubCategoryId == categoryId);
 
         if (isExistProduct)
             return false;
 
-        if (category.Children.Any(c => c.Children.Any()))
+        if (category.Childs.Any(c => c.Childs.Any()))
         {
-            Context.RemoveRange(category.Children.SelectMany(s=>s.Children));
+            Context.RemoveRange(category.Childs.SelectMany(s=>s.Childs));
         }
-        Context.RemoveRange(category.Children);
+        Context.RemoveRange(category.Childs);
         Context.RemoveRange(category);
         return true;
     }

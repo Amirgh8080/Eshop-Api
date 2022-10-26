@@ -5,18 +5,16 @@ namespace Shop.Domain.ProductAgg
 {
     public class ProductImage : BaseEntity
     {
-    
-        public long ProductId { get;internal set; }
-        public string ImageName { get; private set; }
-        public int Secquence { get; private set; }
-
-        public ProductImage(string imageName, int secquence)
+        public ProductImage(string imageName, int sequence)
         {
             NullOrEmptyDomainDataException.CheckString(imageName, nameof(imageName));
 
             ImageName = imageName;
-            Secquence = secquence;
+            Sequence = sequence;
         }
 
+        public long ProductId { get; internal set; }
+        public string ImageName { get; private set; }
+        public int Sequence { get; private set; }
     }
 }

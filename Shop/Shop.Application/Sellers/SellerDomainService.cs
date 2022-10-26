@@ -4,7 +4,7 @@ using Shop.Domain.SellerAgg.Services;
 
 namespace Shop.Application.Sellers;
 
-public class SellerDomainService:ISellerDomainService
+public class SellerDomainService : ISellerDomainService
 {
     private readonly ISellerRepository _repository;
 
@@ -12,16 +12,16 @@ public class SellerDomainService:ISellerDomainService
     {
         _repository = repository;
     }
-    public bool IsSellerInformationValid(Seller seller)
+
+    public bool IsValidSellerInformation(Seller seller)
     {
-        var sellerIsExists = _repository
-            .Exists(s => s.UserId == seller.UserId || s.NationalCode == seller.NationalCode); 
-        return !sellerIsExists;
+        var sellerIsExist = _repository
+            .Exists(r => r.NationalCode == seller.NationalCode || r.UserId == seller.UserId);
+        return !sellerIsExist;
     }
 
-    public bool DoesNationalCodeExistInDataBase(string nationalCode)
+    public bool NationalCodeExistInDataBase(string nationalCode)
     {
-      return _repository
-            .Exists(s =>  s.NationalCode == nationalCode);  
+        return _repository.Exists(r => r.NationalCode == nationalCode);
     }
 }

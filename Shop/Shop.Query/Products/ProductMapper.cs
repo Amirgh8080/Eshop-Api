@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shop.Domain.ProductAgg;
 using Shop.Infrastructure.Persistent.Ef;
-using Shop.Infrastructure.Persistent.EF;
 using Shop.Query.Products.DTOs;
 
 namespace Shop.Query.Products;
@@ -32,7 +31,7 @@ public static class ProductMapper
                 CreationDate = s.CreationDate,
                 ImageName = s.ImageName,
                 ProductId = s.ProductId,
-                Sequence = s.Secquence
+                Sequence = s.Sequence
             }).ToList(),
             Category = new()
             {
@@ -42,9 +41,9 @@ public static class ProductMapper
             {
                 Id = product.SubCategoryId
             },
-            SecondarySubCategory = product.SeconderySubCategory != null ? new()
+            SecondarySubCategory = product.SecondarySubCategoryId != null ? new()
             {
-                Id = (long)product.SeconderySubCategory
+                Id = (long)product.SecondarySubCategoryId
             } : null,
         };
     }

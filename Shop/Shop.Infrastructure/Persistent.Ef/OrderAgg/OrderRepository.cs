@@ -2,7 +2,6 @@
 using Shop.Domain.OrderAgg;
 using Shop.Domain.OrderAgg.Repository;
 using Shop.Infrastructure._Utilities;
-using Shop.Infrastructure.Persistent.EF;
 
 namespace Shop.Infrastructure.Persistent.Ef.OrderAgg
 {
@@ -15,7 +14,7 @@ namespace Shop.Infrastructure.Persistent.Ef.OrderAgg
         public async Task<Order?> GetCurrentUserOrder(long userId)
         {
             return await Context.Orders.AsTracking().FirstOrDefaultAsync(f => f.UserId == userId
-            && f.Status == OrderStatus.Pennding);
+            && f.Status == OrderStatus.Pending);
         }
 
        

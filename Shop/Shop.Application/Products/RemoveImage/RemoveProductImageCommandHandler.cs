@@ -2,7 +2,6 @@
 using Common.Application.FileUtil.Interfaces;
 using Shop.Application._Utilities;
 using Shop.Domain.ProductAgg.Repository;
-using Shop.Domain.ProductAgg.Services;
 
 namespace Shop.Application.Products.RemoveImage
 {
@@ -20,18 +19,13 @@ namespace Shop.Application.Products.RemoveImage
         public async Task<OperationResult> Handle(RemoveProductImageCommand request, CancellationToken cancellationToken)
         {
             var product = await _repository.GetTracking(request.ProductId);
-
             if (product == null)
                 return OperationResult.NotFound();
 
             var imageName = product.RemoveImage(request.ImageId);
             await _repository.Save();
-            _fileService.DeleteFile(Directories.ProductGallery, imageName);
+            _fileService.DeleteFile(Directories.ProductGalleryImage, imageName);
             return OperationResult.Success();
         }
     }
-
 }
-
-
-

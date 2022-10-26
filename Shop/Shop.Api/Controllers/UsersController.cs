@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Shop.Api.Infrastructure.Security;
 using Shop.Api.ViewModels.Users;
 using Shop.Application.SiteEntities.Banners.Edit;
+using Shop.Application.Users.ChangePassword;
 using Shop.Application.Users.Create;
 using Shop.Application.Users.Edit;
 using Shop.Domain.RoleAgg.Enums;
-using Shop.Persentation.Facade.Users;
+using Shop.Presentation.Facade.Users;
 using Shop.Query.Users.DTOs;
 
 namespace Shop.Api.Controllers;
@@ -25,6 +26,7 @@ public class UsersController : ApiController
         _userFacade = userFacade;
         _mapper = mapper;
     }
+    [PermissionChecker(Permission.User_Management)]
     [HttpGet]
     public async Task<ApiResult<UserFilterResult>> GetUsers([FromQuery] UserFilterParams filterParams)
     {
@@ -38,6 +40,7 @@ public class UsersController : ApiController
         return QueryResult(result);
     }
 
+    [PermissionChecker(Permission.User_Management)]
     [HttpGet("{userId}")]
     public async Task<ApiResult<UserDto?>> GetById(long userId)
     {
@@ -45,6 +48,7 @@ public class UsersController : ApiController
         return QueryResult(result);
     }
 
+    [PermissionChecker(Permission.User_Management)]
     [HttpPost]
     public async Task<ApiResult> Create(CreateUserCommand command)
     {
@@ -52,14 +56,14 @@ public class UsersController : ApiController
         return CommandResult(result);
     }
 
-    //[HttpPut("ChangePassword")]
-    //public async Task<ApiResult> ChangePassword(ChangePasswordViewModel command)
-    //{
-    //    var changePasswordModel = _mapper.Map<ChangeUserPasswordCommand>(command);
-    //    changePasswordModel.UserId = User.GetUserId();
-    //    var result = await _userFacade.ChangePassword(changePasswordModel);
-    //    return CommandResult(result);
-    //}
+    [HttpPut("ChangePassword")]
+    public async Task<ApiResult> ChangePassword(ChangePasswordViewModel command)
+    {
+        var changePasswordModel = _mapper.Map<ChangeUserPasswordCommand>(command);
+        changePasswordModel.UserId = User.GetUserId();
+        var result = await _userFacade.ChangePassword(changePasswordModel);
+        return CommandResult(result);
+    }
 
     [HttpPut("Current")]
     public async Task<ApiResult> EditUser([FromForm] EditUserViewModel command)
@@ -71,6 +75,7 @@ public class UsersController : ApiController
         return CommandResult(result);
     }
 
+    [PermissionChecker(Permission.User_Management)]
     [HttpPut]
     public async Task<ApiResult> Edit([FromForm] EditUserCommand command)
     {

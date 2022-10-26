@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Shop.Domain.OrderAgg.ValueObjects;
 using Shop.Domain.SiteEntities;
 
 namespace Shop.Infrastructure.Persistent.Ef.SiteEntities;

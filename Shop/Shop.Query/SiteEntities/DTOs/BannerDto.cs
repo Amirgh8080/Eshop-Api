@@ -1,6 +1,5 @@
 ﻿using Common.Query;
 using Shop.Domain.SiteEntities;
-using Shop.Domain.SiteEntities.Enums;
 
 namespace Shop.Query.SiteEntities.DTOs;
 

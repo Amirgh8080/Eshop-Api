@@ -10,9 +10,7 @@ namespace Shop.Domain.RoleAgg
             Permission = permission;
         }
 
+        public long RoleId { get; internal set; }
         public Permission Permission { get; private set; }
-        public long RoleId { get;internal set; }
-
-
     }
 }

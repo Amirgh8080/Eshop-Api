@@ -2,7 +2,7 @@
 using Common.Domain;
 using Common.Domain.Repository;
 using Microsoft.EntityFrameworkCore;
-using Shop.Infrastructure.Persistent.EF;
+using Shop.Infrastructure.Persistent.Ef;
 
 namespace Shop.Infrastructure._Utilities;
 
@@ -32,7 +32,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         Context.Set<TEntity>().Add(entity);
     }
-
+  
     public async Task AddRange(ICollection<TEntity> entities)
     {
         await Context.Set<TEntity>().AddRangeAsync(entities);

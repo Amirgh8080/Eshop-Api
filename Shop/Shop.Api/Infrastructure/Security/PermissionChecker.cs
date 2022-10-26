@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Shop.Domain.RoleAgg;
 using Shop.Domain.RoleAgg.Enums;
-using Shop.Persentation.Facade.Roles;
-using Shop.Persentation.Facade.Users;
+using Shop.Presentation.Facade.Roles;
+using Shop.Presentation.Facade.Users;
 
 namespace Shop.Api.Infrastructure.Security;
 

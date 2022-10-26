@@ -1,6 +1,6 @@
 ﻿using Common.Query;
 using Common.Query.Filter;
-using Shop.Query.Category.DTOs;
+using Shop.Query.Categories.DTOs;
 
 namespace Shop.Query.Products.DTOs;
 

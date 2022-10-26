@@ -2,13 +2,14 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shop.Api.Infrastructure.Security;
 using Shop.Application.Comments.ChangeStatus;
 using Shop.Application.Comments.Create;
 using Shop.Application.Comments.Delete;
 using Shop.Application.Comments.Edit;
 using Shop.Domain.CommentAgg;
 using Shop.Domain.RoleAgg.Enums;
-using Shop.Persentation.Facade.Comments;
+using Shop.Presentation.Facade.Comments;
 using Shop.Query.Comments.DTOs;
 
 namespace Shop.Api.Controllers;
@@ -23,6 +24,7 @@ public class CommentController : ApiController
         _commentFacade = commentFacade;
     }
 
+    [PermissionChecker(Permission.Comment_Management)]
     [HttpGet]
     public async Task<ApiResult<CommentFilterResult>> GetCommentByFilter([FromQuery] CommentFilterParams filterParams)
     {
@@ -42,7 +44,7 @@ public class CommentController : ApiController
         return QueryResult(result);
     }
 
-    
+    [PermissionChecker(Permission.Comment_Management)]
     [HttpGet("{commentId}")]
     public async Task<ApiResult<CommentDto?>> GetCommentById(long commentId)
     {
@@ -54,7 +56,7 @@ public class CommentController : ApiController
     [Authorize]
     public async Task<ApiResult> CreateComment(CreateCommentCommand command)
     {
-        var result = await _commentFacade.Create(command);
+        var result = await _commentFacade.CreateComment(command);
         return CommandResult(result);
     }
 
@@ -62,12 +64,12 @@ public class CommentController : ApiController
     [Authorize]
     public async Task<ApiResult> EditComment(EditCommentCommand command)
     {
-        var result = await _commentFacade.Edit(command);
+        var result = await _commentFacade.EditComment(command);
         return CommandResult(result);
     }
 
     [HttpPut("changeStatus")]
-    
+    [PermissionChecker(Permission.Comment_Management)]
     public async Task<ApiResult> ChangeCommentStatus(ChangeCommentStatusCommand command)
     {
         var result = await _commentFacade.ChangeStatus(command);
@@ -78,7 +80,7 @@ public class CommentController : ApiController
     [Authorize]
     public async Task<ApiResult> DeleteComment(long commentId)
     {
-        var result = await _commentFacade.Delete(commentId);
+        var result = await _commentFacade.DeleteComment(new DeleteCommentCommand(commentId, User.GetUserId()));
         return CommandResult(result);
     }
 }

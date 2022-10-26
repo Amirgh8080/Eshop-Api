@@ -8,14 +8,11 @@ using System.Threading.Tasks;
 
 namespace Shop.Application.Products.AddImage
 {
-    public record AddProductImageCommand : IBaseCommand
+    public class AddProductImageCommand : IBaseCommand
     {
-        public IFormFile ImageFile { get;private set; }
-        public long ProductId { get;private set; }
-        public int Sequence { get;private set; }
+
+        public IFormFile ImageFile { get;  set; }
+        public long ProductId { get;  set; }
+        public int Sequence { get;  set; }
     }
-
 }
-
-
-
