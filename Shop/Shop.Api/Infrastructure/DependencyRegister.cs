@@ -10,7 +10,7 @@ public static class DependencyRegister
 {
     public static void RegisterApiDependency(this IServiceCollection service, IConfiguration configuration)
     {
-        service.AddAutoMapper(typeof(MapperProfile).Assembly);
+        service.AddAutoMapper(cfg => { }, typeof(MapperProfile).Assembly);
         service.AddTransient<CustomJwtValidation>();
         service.AddHttpClient<IZibalService, ZibalService>();
 

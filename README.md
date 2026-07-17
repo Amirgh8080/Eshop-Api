@@ -24,7 +24,7 @@ Common.*                 → shared kernel (domain base classes, query/app abstr
 
 | Concern | Choice |
 |---|---|
-| Framework | ASP.NET Core (.NET 6) Web API |
+| Framework | ASP.NET Core (.NET 8 LTS) Web API |
 | Data access | Entity Framework Core + SQL Server |
 | Messaging (in-process) | MediatR (commands/queries) |
 | Caching | Redis (distributed cache) |
@@ -57,7 +57,7 @@ Swagger UI is available at `https://localhost:<port>/swagger`.
 
 ## 🗺️ Roadmap
 
-- [ ] Upgrade to .NET 8 LTS
+- [x] Upgrade to .NET 8 LTS
 - [ ] Integration tests (Testcontainers: SQL Server + Redis)
 - [ ] Docker Compose for one-command local setup
 - [ ] Outbox pattern for reliable domain events
