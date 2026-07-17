@@ -6,7 +6,7 @@ using Common.AspNetCore;
 using Common.AspNetCore.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 using Shop.Api.Infrastructure;
 using Shop.Api.Infrastructure.JwtUtil;
 using Shop.Config;
@@ -31,7 +31,7 @@ builder.Services.AddControllers()
             return new BadRequestObjectResult(result);
         });
     });
-builder.Services.AddDistributedRedisCache(option =>
+builder.Services.AddStackExchangeRedisCache(option =>
 {
     option.Configuration = "localhost:6379";
 });
@@ -45,20 +45,16 @@ builder.Services.AddSwaggerGen(option =>
         Name = "JWT Authentication",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
-        Description = "Enter Token",
-
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
+        Description = "Enter Token"
     };
 
-    option.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+    option.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, jwtSecurityScheme);
 
-    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    var jwtSecuritySchemeReference = new OpenApiSecuritySchemeReference(JwtBearerDefaults.AuthenticationScheme);
+
+    option.AddSecurityRequirement(_ => new OpenApiSecurityRequirement
     {
-        { jwtSecurityScheme, Array.Empty<string>() }
+        { jwtSecuritySchemeReference, new List<string>() }
     });
 });
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
