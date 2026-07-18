@@ -40,6 +40,24 @@ Common.*                 → shared kernel (domain base classes, query/app abstr
 
 ## 🚀 Getting started
 
+### Option A: Docker Compose (fastest)
+
+```bash
+git clone https://github.com/Amirgh8080/Eshop-Api.git
+cd Eshop-Api
+docker compose up --build
+```
+
+Spins up the API, SQL Server, and Redis together. Swagger UI is available at
+`http://localhost:8080/swagger`. The API container connects to the other two
+via SQL/Redis auth (no Windows Integrated Security), configured through
+environment variables in `docker-compose.yml` — override `SQL_SA_PASSWORD` if
+you don't want the default dev password. Note: EF Core migrations aren't
+applied automatically; run the `dotnet ef database update` command below
+(pointed at `localhost,1433`) before exercising endpoints that hit the database.
+
+### Option B: Local .NET + your own SQL Server / Redis
+
 ```bash
 git clone https://github.com/Amirgh8080/Eshop-Api.git
 cd Eshop-Api
@@ -59,7 +77,7 @@ Swagger UI is available at `https://localhost:<port>/swagger`.
 
 - [x] Upgrade to .NET 8 LTS
 - [ ] Integration tests (Testcontainers: SQL Server + Redis)
-- [ ] Docker Compose for one-command local setup
+- [x] Docker Compose for one-command local setup
 - [ ] Outbox pattern for reliable domain events
 
 ## 📄 License
