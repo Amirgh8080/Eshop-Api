@@ -73,10 +73,23 @@ dotnet run --project Shop/Shop.Api
 
 Swagger UI is available at `https://localhost:<port>/swagger`.
 
+## 🧪 Testing
+
+```bash
+dotnet test tests/Shop.Api.IntegrationTests
+```
+
+Integration tests spin up real, ephemeral SQL Server and Redis containers via
+[Testcontainers](https://dotnet.testcontainers.org/) (needs Docker running),
+apply EF Core migrations, then exercise the app through
+`WebApplicationFactory`: an auth flow (register → login → JWT issuance, plus
+a wrong-password rejection case) and a full CRUD flow on the shipping-method
+endpoint (create → read → update → delete).
+
 ## 🗺️ Roadmap
 
 - [x] Upgrade to .NET 8 LTS
-- [ ] Integration tests (Testcontainers: SQL Server + Redis)
+- [x] Integration tests (Testcontainers: SQL Server + Redis)
 - [x] Docker Compose for one-command local setup
 - [ ] Outbox pattern for reliable domain events
 
