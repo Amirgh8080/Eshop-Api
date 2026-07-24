@@ -33,7 +33,7 @@ builder.Services.AddControllers()
     });
 builder.Services.AddStackExchangeRedisCache(option =>
 {
-    option.Configuration = "localhost:6379";
+    option.Configuration = builder.Configuration.GetConnectionString("Redis") ?? "localhost:6379";
 });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
@@ -84,3 +84,5 @@ app.UseApiCustomExceptionHandler();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

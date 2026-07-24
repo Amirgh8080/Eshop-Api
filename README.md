@@ -40,6 +40,24 @@ Common.*                 → shared kernel (domain base classes, query/app abstr
 
 ## 🚀 Getting started
 
+### Option A: Docker Compose (fastest)
+
+```bash
+git clone https://github.com/Amirgh8080/Eshop-Api.git
+cd Eshop-Api
+docker compose up --build
+```
+
+Spins up the API, SQL Server, and Redis together. Swagger UI is available at
+`http://localhost:8080/swagger`. The API container connects to the other two
+via SQL/Redis auth (no Windows Integrated Security), configured through
+environment variables in `docker-compose.yml` — override `SQL_SA_PASSWORD` if
+you don't want the default dev password. Note: EF Core migrations aren't
+applied automatically; run the `dotnet ef database update` command below
+(pointed at `localhost,1433`) before exercising endpoints that hit the database.
+
+### Option B: Local .NET + your own SQL Server / Redis
+
 ```bash
 git clone https://github.com/Amirgh8080/Eshop-Api.git
 cd Eshop-Api
@@ -71,11 +89,24 @@ dotnet user-secrets set "JwtConfig:SignInKey" "<a long random string>"
 Or via an environment variable (e.g. in a deployment): `JwtConfig__SignInKey`
 (double underscore, per ASP.NET Core's configuration binding convention).
 
+## 🧪 Testing
+
+```bash
+dotnet test tests/Shop.Api.IntegrationTests
+```
+
+Integration tests spin up real, ephemeral SQL Server and Redis containers via
+[Testcontainers](https://dotnet.testcontainers.org/) (needs Docker running),
+apply EF Core migrations, then exercise the app through
+`WebApplicationFactory`: an auth flow (register → login → JWT issuance, plus
+a wrong-password rejection case) and a full CRUD flow on the shipping-method
+endpoint (create → read → update → delete).
+
 ## 🗺️ Roadmap
 
 - [x] Upgrade to .NET 8 LTS
-- [ ] Integration tests (Testcontainers: SQL Server + Redis)
-- [ ] Docker Compose for one-command local setup
+- [x] Integration tests (Testcontainers: SQL Server + Redis)
+- [x] Docker Compose for one-command local setup
 - [ ] Outbox pattern for reliable domain events
 
 ## 📄 License
