@@ -55,6 +55,22 @@ dotnet run --project Shop/Shop.Api
 
 Swagger UI is available at `https://localhost:<port>/swagger`.
 
+### JWT signing key
+
+`appsettings.json` ships with `JwtConfig:SignInKey` set to the placeholder
+`REPLACE-WITH-YOUR-OWN-SIGNING-KEY` — the API won't issue trustworthy tokens
+until you supply your own. Set a real value locally via user secrets (never
+commit it):
+
+```bash
+cd Shop/Shop.Api
+dotnet user-secrets init
+dotnet user-secrets set "JwtConfig:SignInKey" "<a long random string>"
+```
+
+Or via an environment variable (e.g. in a deployment): `JwtConfig__SignInKey`
+(double underscore, per ASP.NET Core's configuration binding convention).
+
 ## 🗺️ Roadmap
 
 - [x] Upgrade to .NET 8 LTS
